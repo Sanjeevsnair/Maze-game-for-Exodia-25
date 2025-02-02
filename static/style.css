@@ -1,0 +1,334 @@
+/* Root variables for consistent theme */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --wall-color: #34495e;
+    --path-color: #ecf0f1;
+    --door-color: #f1c40f;
+}
+
+/* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Game container */
+.game-container {
+    max-width: 95vw;
+    max-height: 95vh;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 2.5em;
+    margin: 0;
+}
+
+
+.player-details {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 200px;
+    max-height: 100px;
+    margin: 20px auto;
+    color: white;
+}
+
+.player-details h2 {
+    text-align: top;
+    font-size: 1.1em;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.player-info {
+    display: block;
+}
+
+.player-info p {
+    font-size: 0.7em;
+    color: white;
+}
+
+.player-info span {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+
+/* Maze grid */
+#maze {
+    display: grid;
+    grid-template-columns: repeat(50, minmax(10px, 1fr));
+    grid-template-rows: repeat(50, minmax(10px, 1fr));
+    width: 100%;
+    max-width: 500px; /* Limits size while keeping square shape */
+    aspect-ratio: 1 / 1; /* Ensures the maze remains square */
+    background-color: var(--wall-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Individual maze cells */
+.cell {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Walls */
+.cell.wall {
+    background-color: var(--wall-color);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Pathways */
+.cell.path {
+    background-color: var(--path-color);
+    opacity: 0.9;
+}
+
+/* Player */
+.cell.player {
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+    animation: bounce 0.5s infinite alternate;
+}
+
+/* Entrance & Exit Doors */
+.cell.entry {
+    background-color: #27ae60;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 5px;
+}
+
+.cell.exit {
+    background-color: #f39c12;  /* Orange color for the exit door */
+    border-radius: 50%;  /* Circle for the exit */
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.8);  /* Glowing effect */
+}
+
+
+
+/* Label for doors */
+.door-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8em;
+    font-weight: bold;
+    color: black;
+    background: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Game controls */
+#controls {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Game status (win/lose) */
+#game-status {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    display: none;
+}
+
+.timer-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 10px auto;
+    display: block;
+}
+
+.timer-circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.timer-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-background,
+.timer-progress {
+    fill: none;
+    stroke-width: 4;
+    cx: 25;
+    cy: 25;
+    r: 22; /* Adjusted for 50px container */
+}
+
+.timer-background {
+    stroke: rgba(255, 255, 255, 0.1);
+}
+
+.timer-progress {
+    stroke: var(--secondary-color);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+    stroke-dasharray: 138.23; /* 2 * π * 22 */
+    stroke-dashoffset: 138.23; /* Start with full circle hidden */
+}
+
+/* Animate progress dynamically with JavaScript */
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-size: 0.6em;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Add a pulsing animation when time is running low */
+@keyframes pulse-warning {
+    0% { stroke: var(--secondary-color); }
+    50% { stroke: var(--accent-color); }
+    100% { stroke: var(--secondary-color); }
+}
+
+.timer-progress.warning {
+    animation: pulse-warning 1s infinite;
+}
+
+.restriction-message {
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+/* Animations */
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-3px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-container {
+        width: 90vw;
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    #maze {
+        max-width: 350px;
+        grid-template-columns: repeat(50, minmax(6px, 1fr));
+        grid-template-rows: repeat(50, minmax(6px, 1fr));
+    }
+
+    button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3em;
+    }
+
+    .door-label {
+        font-size: 0.7em;
+        padding: 2px 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    #maze {
+        max-width: 300px;
+        grid-template-columns: repeat(50, minmax(5px, 1fr));
+        grid-template-rows: repeat(50, minmax(5px, 1fr));
+    }
+
+    button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2em;
+    }
+
+    .door-label {
+        font-size: 0.6em;
+        padding: 1px 2px;
+    }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extreme Maze Escape</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <div class="player-details">
+                <h2>Player Information</h2>
+                <div class="player-info">
+                    <p><strong>Player Name:</strong> <span id="player-name">Loading...</span></p>
+                    <p><strong>Player Number:</strong> <span id="player-number">Loading...</span></p>
+                </div>
+            </div>
+            <h1>Maze Game</h1>
+        </div>
+        <div id="maze"></div>
+        <div id="controls">
+            <button id="up">⬇️</button>
+            <button id="down">⬆️</button>
+            <button id="left">➡️</button>
+            <button id="right">⬅️</button>
+        </div>
+        <!-- Replace the existing timer paragraph with this -->
+<div id="timer-container" class="timer-container">
+    <div class="timer-circle">
+        <svg class="timer-svg">
+            <circle class="timer-background"></circle>
+            <circle class="timer-progress"></circle>
+        </svg>
+        <div class="timer-text">
+            <span id="timer">5:00</span>
+        </div>
+    </div>
+</div>
+    </div>
+    <div id="game-status" class="hidden">
+        <p id="status-message"></p>
+        <p id="completion-time"></p>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+</body>
+
+</html>
